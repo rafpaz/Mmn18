@@ -6,12 +6,24 @@ import java.util.Queue;
 /**
  * Created by Refael_Paz on 25/07/2015.
  */
-public class RedBlackTree<Key extends Comparable<Key>, Value>
+public class RedBlackTree
 {
     private static final boolean RED = true;
     private static final boolean BLACK = false;
 
     private Node root;
+
+    public void InsertBox(Integer side,Integer height) {
+        Node node = getNode(side);
+        if (node != null)
+        {
+            node.amount = node.amount + 1;
+
+        }
+    }
+
+
+
 
     public void printStructure()
     {
@@ -30,18 +42,18 @@ public class RedBlackTree<Key extends Comparable<Key>, Value>
 
     public class Node
     {
-        private Key key;
-        private Value val;
+        private Integer key;
+        private Integer amount;
         private Node left, right;
         private boolean color;
         private int size;
         private RedBlackTree innerTree;
         private Node root;
 
-        public Node(Key key, Value val, boolean color, int size)
+        public Node(Integer key, Integer amount, boolean color, int size)
         {
             this.key = key;
-            this.val = val;
+            this.amount = amount;
             this.color = color;
             this.size = size;
             //this.innerTree = new RedBlackTree();
@@ -58,7 +70,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value>
             }
 
             //Print the node content
-            System.out.println("ROOT: " + val + ", color: " + color);
+            System.out.println("ROOT: " + key + ", color: " + color);
 
             //Indent
             for (int i = 1; i <= n; i++)
@@ -131,12 +143,12 @@ public class RedBlackTree<Key extends Comparable<Key>, Value>
         return root == null;
     }
 
-    public Value get(Key key)
+    public Integer get(Integer key)
     {
         return get(root, key);
     }
 
-    private Value get(Node node, Key key)
+    private Integer get(Node node, Integer key)
     {
         while (node != null)
         {
@@ -146,12 +158,12 @@ public class RedBlackTree<Key extends Comparable<Key>, Value>
             else if (cmp > 0)
                 node = node.right;
             else
-                return node.val;
+                return node.amount;
         }
         return null;
     }
 
-    private Node getNode(Node node,Key key)
+    private Node getNode(Node node,Integer key)
     {
         while (node != null)
         {
@@ -166,12 +178,12 @@ public class RedBlackTree<Key extends Comparable<Key>, Value>
         return null;
     }
 
-    public Node getNode(Key key)
+    public Node getNode(Integer key)
     {
         return getNode(root,key);
     }
 
-    public boolean contains(Key key)
+    public boolean contains(Integer key)
     {
         return get(key) != null;
     }
@@ -179,24 +191,24 @@ public class RedBlackTree<Key extends Comparable<Key>, Value>
     /********
      * Insert Functions
      **********/
-    public void put(Key key, Value val)
+    public void put(Integer key, Integer amount)
     {
-        root = put(root, key, val);
+        root = put(root, key, amount);
         root.color = BLACK;
     }
 
-    private Node put(Node sub_root, Key key, Value val)
+    private Node put(Node sub_root, Integer key, Integer amount)
     {
         if (sub_root == null)
-            return new Node(key, val, RED, 1);
+            return new Node(key, amount, RED, 1);
 
         int cmp = key.compareTo(sub_root.key);
         if (cmp < 0)
-            sub_root.left = put(sub_root.left, key, val);
+            sub_root.left = put(sub_root.left, key, amount);
         else if (cmp > 0)
-            sub_root.right = put(sub_root.right, key, val);
+            sub_root.right = put(sub_root.right, key, amount);
         else
-            sub_root.val = val;
+            sub_root.amount = amount;
 
         if (isRed(sub_root.right) && !isRed(sub_root.left))
             sub_root = rotateLeft(sub_root);
@@ -265,7 +277,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value>
         return balance(sub_root);
     }
 
-    public void delete(Key key)
+    public void delete(Integer key)
     {
         if (!contains(key))
         {
@@ -280,7 +292,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value>
             root.color = BLACK;
     }
 
-    private Node delete(Node sub_root, Key key)
+    private Node delete(Node sub_root, Integer key)
     {
         if (key.compareTo(sub_root.key) < 0)
         {
@@ -300,7 +312,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value>
             {
                 Node x = min(sub_root.right);
                 sub_root.key = x.key;
-                sub_root.val = x.val;
+                sub_root.amount = x.amount;
                 sub_root.right = deleteMin(sub_root.right);
             } else
             {
@@ -389,7 +401,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value>
         return 1 + Math.max(height(node.left), height(node.right));
     }
 
-    public Key min()
+    public Integer min()
     {
         if (isEmpty()) return null;
         return min(root).key;
@@ -403,7 +415,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value>
             return min(node.left);
     }
 
-    public Key max()
+    public Integer max()
     {
         if (isEmpty())
             return null;
@@ -418,7 +430,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value>
             return max(node.right);
     }
 
-    public Key floor(Key key)
+    public Integer floor(Integer key)
     {
         Node node = floor(root, key);
         if (node == null)
@@ -427,7 +439,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value>
             return node.key;
     }
 
-    private Node floor(Node node, Key key)
+    private Node floor(Node node, Integer key)
     {
         if (node == null)
             return null;
@@ -443,14 +455,14 @@ public class RedBlackTree<Key extends Comparable<Key>, Value>
             return node;
     }
 
-    public Key ceiling(Key key)
+    public Integer ceiling(Integer key)
     {
         Node node = ceiling(root, key);
         if (node == null) return null;
         else            return node.key;
     }
 
-    private Node ceiling(Node node, Key key)
+    private Node ceiling(Node node, Integer key)
     {
         if (node == null) return null;
         int cmp = key.compareTo(node.key);
@@ -462,7 +474,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value>
     }
 
 
-    public Key select(int k)
+    public Integer select(int k)
     {
         if (k < 0 || k >= size()) return null;
         Node node = select(root, k);
@@ -477,12 +489,12 @@ public class RedBlackTree<Key extends Comparable<Key>, Value>
         else            return node;
     }
 
-    public int rank(Key key)
+    public int rank(Integer key)
     {
         return rank(key,root);
     }
 
-    private int rank(Key key, Node node)
+    private int rank(Integer key, Node node)
     {
         if (node == null) return 0;
         int cmp = key.compareTo(node.key);
@@ -551,7 +563,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value>
         return isBST(root,null,null);
     }
 
-    private boolean isBST(Node node, Key min, Key max)
+    private boolean isBST(Node node, Integer min, Integer max)
     {
         if (node == null) return true;
         if (min != null && node.key.compareTo(min) <= 0) return false;
