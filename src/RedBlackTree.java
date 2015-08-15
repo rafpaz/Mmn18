@@ -35,7 +35,26 @@ public class RedBlackTree
 
     public void RemoveBox(Integer side, Integer height)
     {
-
+        Node side_node = getNode(side);
+        if (side_node == null)
+            System.out.print("No such side value exists");
+        else
+        {
+            Node height_node = side_node.innerTree.getNode(height);
+            if (height_node == null)
+                System.out.print("No such height value exists");
+            else
+            {
+                if (height_node.amount != 1)
+                    height_node.amount--;
+                else
+                {
+                    side_node.innerTree.delete(height);
+                    if (side_node.innerTree.size() == 0)
+                        delete(side);
+                }
+            }
+        }
     }
 
 
