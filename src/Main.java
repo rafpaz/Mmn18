@@ -11,8 +11,10 @@ public class Main
         tree.InsertBox(5,5);
         tree.InsertBox(5,5);
         tree.InsertBox(6,5);
-        tree.RemoveBox(5,5);
-        tree.RemoveBox(5,5);
+        tree.InsertBox(7,3);
+        tree.InsertBox(9, 2);
+        System.out.print(tree.TreeSuccessor(tree.getNode(9)).getKey());
+
 
 
 //        RedBlackTree tree = new RedBlackTree();

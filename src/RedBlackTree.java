@@ -10,6 +10,16 @@ public class RedBlackTree
 
     private Node root;
 
+//    public GetBox(Integer side,Integer height)
+//    {
+//
+//    }
+
+    public Node TreeSuccessor(Node node)
+    {
+        return ceilingNode(node.key+1);
+    }
+
     public void InsertBox(Integer side,Integer height) {
         Node side_node = getNode(side);
         if (side_node != null) {
@@ -90,6 +100,11 @@ public class RedBlackTree
             this.color = color;
             this.size = size;
             //this.innerTree = new RedBlackTree();
+        }
+
+        public Integer getKey()
+        {
+            return key;
         }
 
         public void display(int n)
@@ -487,6 +502,14 @@ public class RedBlackTree
         else
             return node;
     }
+
+    private Node ceilingNode(Integer key)
+    {
+        Node node = ceiling(root, key);
+        if (node == null) return null;
+        else              return node;
+    }
+
 
     public Integer ceiling(Integer key)
     {
