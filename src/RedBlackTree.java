@@ -1,7 +1,4 @@
-import java.util.LinkedList;
 import java.util.NoSuchElementException;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 /**
  * Created by Refael_Paz on 25/07/2015.
@@ -14,15 +11,32 @@ public class RedBlackTree
     private Node root;
 
     public void InsertBox(Integer side,Integer height) {
-        Node node = getNode(side);
-        if (node != null)
+        Node side_node = getNode(side);
+        if (side_node != null) {
+            Node height_node = side_node.innerTree.getNode(height);
+            if (height_node != null)
+                height_node.amount++;
+            else
+                side_node.innerTree.put(height, 1);
+        }
+        else
         {
-            node.amount = node.amount + 1;
-
+            this.putBox(side,height);
         }
     }
 
+    private void putBox(Integer side, Integer height)
+    {
+        this.put(side,1);
+        Node side_node = getNode(side);
+        side_node.innerTree = new RedBlackTree();
+        side_node.innerTree.put(height, 1);
+    }
 
+    public void RemoveBox(Integer side, Integer height)
+    {
+
+    }
 
 
     public void printStructure()
