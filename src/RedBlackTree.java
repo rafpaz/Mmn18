@@ -1,3 +1,7 @@
+import jdk.nashorn.internal.ir.IfNode;
+import jdk.nashorn.internal.ir.WhileNode;
+
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 /**
@@ -10,10 +14,46 @@ public class RedBlackTree
 
     private Node root;
 
-//    public GetBox(Integer side,Integer height)
-//    {
-//
-//    }
+    private class BestNode
+    {
+        private Node best_side;
+        private Node best_height;
+        private int best_volume;
+    }
+
+    public Integer GetBox(Integer side,Integer height)
+    {
+        BestNode best_node = new BestNode();
+        best_node.best_side = ceilingNode(side);
+        if (best_node.best_side != null)
+        {
+            best_node.best_height = best_node.best_side.innerTree.ceilingNode(height);
+            best_node.best_volume = best_node.best_side.key * 2 * best_node.best_height.key;
+        }
+        Node current_side_node = TreeSuccessor(best_node.best_side);
+
+        while(current_side_node != null)
+        {
+            Node current_height_node = current_side_node.innerTree.ceilingNode(height);
+            if(current_height_node != null)
+            {
+                int current_volume;
+                current_volume = current_side_node.key * 2 * current_height_node.key;
+                if (current_volume < best_node.best_volume)
+                {
+                    best_node.best_side = current_side_node;
+                    best_node.best_height = current_height_node;
+                    best_node.best_volume = current_volume;
+                }
+            }
+            current_side_node = TreeSuccessor(current_side_node);
+        }
+        if (best_node.best_side != null)
+        {
+            best_node.best_side.best_height = best_node.best_height;
+        }
+        return best_node.best_side.key;
+    }
 
     public Node TreeSuccessor(Node node)
     {
@@ -92,6 +132,7 @@ public class RedBlackTree
         private int size;
         private RedBlackTree innerTree;
         private Node root;
+        private Node best_height;
 
         public Node(Integer key, Integer amount, boolean color, int size)
         {
