@@ -44,8 +44,8 @@ public class RedBlackTree
     {
         Integer[] bestBox = new Integer[2];
         BestNode best_node = new BestNode();
-        Node current_side_node = TreeSuccessor(best_node.best_side);
         best_node.best_side = ceilingNode(side);
+        Node current_side_node = TreeSuccessor(best_node.best_side);
         if (best_node.best_side != null)
         {
             best_node.best_height = best_node.best_side.innerTree.ceilingNode(height);
@@ -80,7 +80,10 @@ public class RedBlackTree
 
     public Node TreeSuccessor(Node node)
     {
-        return ceilingNode(node.key+1);
+        if (node != null)
+            return ceilingNode(node.key+1);
+        else
+            return null;
     }
 
     public void InsertBox(Integer side,Integer height) {

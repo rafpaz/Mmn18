@@ -53,7 +53,7 @@ public class Menu
                     side = box_values.nextInt();
                     height = box_values.nextInt();
                     if(tree.CheckBox(side,height) == true)
-                        System.out.print("Success!");
+                        System.out.println("Success!");
                     else
                         System.out.println("No matching box exist...");
                     break;
