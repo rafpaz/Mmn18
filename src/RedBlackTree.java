@@ -21,16 +21,36 @@ public class RedBlackTree
         private int best_volume;
     }
 
-    public Integer GetBox(Integer side,Integer height)
+    public boolean CheckBox(Integer side,Integer height)
     {
+        boolean check_box;
+        Node tmp = ceilingNode(side);
+        if(tmp != null)
+        {
+            if (tmp.innerTree.ceiling(height) != null)
+                check_box = true;
+            else
+                check_box = false;
+        }
+        else
+        {
+            check_box = false;
+        }
+
+        return check_box;
+    }
+
+    public Integer[] GetBox(Integer side,Integer height)
+    {
+        Integer[] bestBox = new Integer[2];
         BestNode best_node = new BestNode();
+        Node current_side_node = TreeSuccessor(best_node.best_side);
         best_node.best_side = ceilingNode(side);
         if (best_node.best_side != null)
         {
             best_node.best_height = best_node.best_side.innerTree.ceilingNode(height);
             best_node.best_volume = best_node.best_side.key * 2 * best_node.best_height.key;
         }
-        Node current_side_node = TreeSuccessor(best_node.best_side);
 
         while(current_side_node != null)
         {
@@ -51,8 +71,11 @@ public class RedBlackTree
         if (best_node.best_side != null)
         {
             best_node.best_side.best_height = best_node.best_height;
+            bestBox[0] = best_node.best_side.key;
+            bestBox[1] = best_node.best_height.key;
         }
-        return best_node.best_side.key;
+
+        return bestBox;
     }
 
     public Node TreeSuccessor(Node node)
@@ -83,16 +106,24 @@ public class RedBlackTree
         side_node.innerTree.put(height, 1);
     }
 
-    public void RemoveBox(Integer side, Integer height)
+    public boolean RemoveBox(Integer side, Integer height)
     {
+        boolean box_exist = true;
         Node side_node = getNode(side);
         if (side_node == null)
+        {
             System.out.print("No such side value exists");
+            box_exist = false;
+        }
+
         else
         {
             Node height_node = side_node.innerTree.getNode(height);
             if (height_node == null)
+            {
                 System.out.print("No such height value exists");
+                box_exist = false;
+            }
             else
             {
                 if (height_node.amount != 1)
@@ -105,6 +136,7 @@ public class RedBlackTree
                 }
             }
         }
+        return box_exist;
     }
 
 
@@ -140,7 +172,6 @@ public class RedBlackTree
             this.amount = amount;
             this.color = color;
             this.size = size;
-            //this.innerTree = new RedBlackTree();
         }
 
         public Integer getKey()

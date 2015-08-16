@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * Created by Refael_Paz on 25/07/2015.
  */
@@ -5,14 +7,18 @@ public class Main
 {
     public static void main(String[] args)
     {
-        RedBlackTree tree = new RedBlackTree();
-        tree.InsertBox(5,3);
-        tree.InsertBox(5,4);
-        tree.InsertBox(5,5);
-        tree.InsertBox(5,5);
-        tree.InsertBox(6,5);
-        tree.InsertBox(7,5);
-        tree.InsertBox(9,2);
+
+
+
+
+//        RedBlackTree tree = new RedBlackTree();
+//        tree.InsertBox(5,3);
+//        tree.InsertBox(5,4);
+//        tree.InsertBox(5,5);
+//        tree.InsertBox(5,5);
+//        tree.InsertBox(6,5);
+//        tree.InsertBox(7,5);
+//        tree.InsertBox(9,2);
 
 
 
