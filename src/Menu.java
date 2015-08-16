@@ -35,8 +35,8 @@ public class Menu
                     System.out.println("Enter box side and height to remove: ");
                     side = box_values.nextInt();
                     height = box_values.nextInt();
-                    if(tree.RemoveBox(side,height));
-                        System.out.println("Box inserted successfully!");
+                    if(tree.RemoveBox(side,height))
+                        System.out.println("Box removed successfully!");
                     break;
                 case 3:
                     System.out.println("Enter the box side and height to get the best matching box for you:");

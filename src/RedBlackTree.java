@@ -49,7 +49,10 @@ public class RedBlackTree
         if (best_node.best_side != null)
         {
             best_node.best_height = best_node.best_side.innerTree.ceilingNode(height);
-            best_node.best_volume = best_node.best_side.key * 2 * best_node.best_height.key;
+            if (best_node.best_height != null)
+                best_node.best_volume = best_node.best_side.key * 2 * best_node.best_height.key;
+            else
+                best_node.best_volume = 0;
         }
 
         while(current_side_node != null)
@@ -59,7 +62,7 @@ public class RedBlackTree
             {
                 int current_volume;
                 current_volume = current_side_node.key * 2 * current_height_node.key;
-                if (current_volume < best_node.best_volume)
+                if (current_volume < best_node.best_volume || best_node.best_volume == 0)
                 {
                     best_node.best_side = current_side_node;
                     best_node.best_height = current_height_node;
