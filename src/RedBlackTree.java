@@ -71,7 +71,7 @@ public class RedBlackTree
             }
             current_side_node = TreeSuccessor(current_side_node);
         }
-        if (best_node.best_side != null)
+        if (best_node.best_side != null && best_node.best_height != null)
         {
             best_node.best_side.best_height = best_node.best_height;
             bestBox[0] = best_node.best_side.key;
